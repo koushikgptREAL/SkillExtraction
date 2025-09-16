@@ -239,18 +239,6 @@ export default function Landing({ onSignIn, user }: LandingProps) {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-20">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto space-y-8">
-            <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
-              <TrendingUp className="w-3 h-3 mr-1" />
-              Start Your Career Transformation
-            </Badge>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
