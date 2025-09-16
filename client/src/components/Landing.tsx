@@ -70,10 +70,6 @@ export default function Landing({ onSignIn, user }: LandingProps) {
                 <Award className="w-3 h-3 mr-1" />
                 95% Accuracy
               </Badge>
-              <Badge variant="secondary" className="px-3 py-1">
-                <Users className="w-3 h-3 mr-1" />
-                Trusted by 10K+ Users
-              </Badge>
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
@@ -86,7 +82,7 @@ export default function Landing({ onSignIn, user }: LandingProps) {
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Button 
               size="lg" 
               className="text-lg px-10 py-6 shadow-lg hover:shadow-xl transition-shadow"
@@ -94,31 +90,8 @@ export default function Landing({ onSignIn, user }: LandingProps) {
               data-testid="button-get-started"
             >
               <Zap className="w-5 h-5 mr-2" />
-              Start Free Analysis
+              Start Analysis
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="text-lg px-10 py-6 bg-background/50 backdrop-blur"
-              data-testid="button-learn-more"
-            >
-              View Demo
-            </Button>
-          </div>
-          
-          <div className="flex justify-center items-center gap-8 text-sm text-muted-foreground pt-6">
-            <div className="flex items-center gap-1">
-              <CheckCircle className="w-4 h-4 text-green-500" />
-              No credit card required
-            </div>
-            <div className="flex items-center gap-1">
-              <CheckCircle className="w-4 h-4 text-green-500" />
-              GDPR compliant
-            </div>
-            <div className="flex items-center gap-1">
-              <CheckCircle className="w-4 h-4 text-green-500" />
-              SOC 2 certified
-            </div>
           </div>
         </div>
       </section>
