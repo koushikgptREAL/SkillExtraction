@@ -161,58 +161,82 @@ export default function Landing({ onSignIn, user }: LandingProps) {
         </div>
       </section>
 
-      {/* Statistics Section */}
+      {/* Analysis Process Section */}
       <section className="container mx-auto px-4 py-20">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6">Trusted by Industry Leaders</h2>
+            <h2 className="text-4xl font-bold mb-6">How Our System Analyzes Your Resume</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Join thousands of professionals who have accelerated their careers with our platform
+              Advanced AI-powered analysis that breaks down your resume into actionable insights
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">50K+</div>
-              <p className="text-muted-foreground">Resumes Analyzed</p>
+          <div className="space-y-8">
+            <div className="flex items-start gap-6 p-6 rounded-xl bg-muted/30 hover-elevate">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <span className="text-primary font-bold text-lg">1</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Text Extraction & Processing</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Our system extracts all text content from your PDF resume using advanced OCR technology, 
+                  preserving formatting and structure while preparing it for analysis.
+                </p>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">95%</div>
-              <p className="text-muted-foreground">Accuracy Rate</p>
+
+            <div className="flex items-start gap-6 p-6 rounded-xl bg-muted/30 hover-elevate">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <span className="text-primary font-bold text-lg">2</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Intelligent Keyword Matching</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  We scan your resume against our comprehensive database of 10,000+ skills, technologies, 
+                  and professional competencies using natural language processing.
+                </p>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">500+</div>
-              <p className="text-muted-foreground">Enterprise Clients</p>
+
+            <div className="flex items-start gap-6 p-6 rounded-xl bg-muted/30 hover-elevate">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <span className="text-primary font-bold text-lg">3</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Context-Aware Analysis</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Our AI understands context and relationships between skills, identifying not just explicit mentions 
+                  but also implied competencies based on experience and project descriptions.
+                </p>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">24/7</div>
-              <p className="text-muted-foreground">Expert Support</p>
+
+            <div className="flex items-start gap-6 p-6 rounded-xl bg-muted/30 hover-elevate">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <span className="text-primary font-bold text-lg">4</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Smart Categorization</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Detected skills are automatically organized into relevant categories like programming languages, 
+                  frameworks, soft skills, and industry-specific competencies for easy review.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-6 p-6 rounded-xl bg-muted/30 hover-elevate">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <span className="text-primary font-bold text-lg">5</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Confidence Scoring</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Each skill receives a confidence score based on frequency, context, and relevance, 
+                  helping you understand which skills are most prominently featured in your resume.
+                </p>
+              </div>
             </div>
           </div>
-
-          {/* Testimonial */}
-          <Card className="max-w-4xl mx-auto bg-gradient-to-r from-primary/5 to-muted/20 border-0">
-            <CardContent className="p-8 text-center">
-              <div className="flex justify-center mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-              <blockquote className="text-xl font-medium mb-4 italic">
-                "This platform transformed how we screen candidates. The skill extraction is incredibly accurate 
-                and saves our HR team countless hours. A game-changer for talent acquisition."
-              </blockquote>
-              <div className="flex items-center justify-center gap-3">
-                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                  <span className="font-semibold text-primary">SM</span>
-                </div>
-                <div className="text-left">
-                  <div className="font-semibold">Sarah Mitchell</div>
-                  <div className="text-sm text-muted-foreground">VP of Talent, TechCorp</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </section>
 
