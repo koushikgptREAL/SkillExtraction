@@ -37,26 +37,6 @@ It uses **Express + React + TailwindCSS** with **Clerk Authentication**, **Drizz
 - TypeScript  
 - Cross-env  
 
----
-
-📂 Project Structure
-SkillExtraction/
-│
-├── server/             # Express backend (TypeScript)
-│   ├── index.ts        # Entry point
-│   ├── routes/         # API endpoints
-│   └── utils/          # Helper functions
-│
-├── src/                # React frontend
-│   ├── components/     # UI components
-│   ├── pages/          # Pages
-│   └── hooks/          # React hooks
-│
-├── public/             # Static assets
-├── .env                # Environment variables
-├── package.json
-├── README.md
-└── ...
 
 ---
 ## 📦 Installation
