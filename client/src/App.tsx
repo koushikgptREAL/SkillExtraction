@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useUser, useClerk } from "@clerk/clerk-react";
 import Landing from "@/components/Landing";
 import Dashboard from "@/components/Dashboard";
 
@@ -14,24 +15,60 @@ interface User {
 }
 
 function Router() {
-  // TODO: remove mock functionality - replace with real Firebase auth
   const [user, setUser] = useState<User | null>(null);
+  const { user: clerkUser, isLoaded } = useUser();
+  const clerk = useClerk();
+
+  useEffect(() => {
+    if (clerkUser && isLoaded) {
+      setUser({
+        name: clerkUser.fullName || clerkUser.firstName || "User",
+        email: clerkUser.primaryEmailAddress?.emailAddress || "",
+        avatar: clerkUser.imageUrl
+      });
+    } else if (isLoaded && !clerkUser) {
+      // Fallback to API auth if Clerk user is not available
+      fetch('/api/auth/me', { credentials: 'include' })
+        .then(async (r) => {
+          if (r.status === 401) return null;
+          const u = await r.json();
+          return { name: u.username, email: u.username } as User;
+        })
+        .then((u) => { if (u) setUser(u); })
+        .catch(() => {});
+    }
+  }, [clerkUser, isLoaded]);
 
   const handleSignIn = () => {
-    // TODO: implement real Google OAuth with Firebase
-    console.log('Sign in with Google');
-    // Mock user for demo
-    setUser({
-      name: "John Smith",
-      email: "john.smith@example.com"
-    });
+    const hasClerk = Boolean((import.meta.env as any).VITE_CLERK_PUBLISHABLE_KEY || (import.meta.env as any).NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+    if (hasClerk) {
+      // Clerk's <SignInButton /> handles opening the modal; no redirect needed here
+      return;
+    }
+    window.location.href = '/api/auth/google';
   };
 
-  const handleSignOut = () => {
-    // TODO: implement real sign out
-    console.log('Sign out');
+  const handleSignOut = async () => {
+    const hasClerk = Boolean((import.meta.env as any).VITE_CLERK_PUBLISHABLE_KEY || (import.meta.env as any).NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+    if (hasClerk && clerk) {
+      await clerk.signOut();
+    } else {
+      await fetch('/api/auth/signout', { method: 'POST', credentials: 'include' });
+    }
     setUser(null);
   };
+
+  // Show loading state while Clerk is initializing
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Switch>
@@ -49,7 +86,6 @@ function Router() {
           <Landing onSignIn={handleSignIn} user={user} />
         )}
       </Route>
-      {/* Fallback */}
       <Route>
         {user ? (
           <Dashboard user={user} onSignOut={handleSignOut} />

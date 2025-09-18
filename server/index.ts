@@ -1,10 +1,31 @@
+import "dotenv/config";
 import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes";
+import session from "express-session";
+import passport from "passport";
+import MemoryStoreFactory from "memorystore";
+import { registerRoutes, configureAuth } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Sessions
+const MemoryStore = MemoryStoreFactory(session);
+const sessionSecret = process.env.SESSION_SECRET || "dev-session-secret";
+app.use(
+  session({
+    secret: sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },
+    store: new MemoryStore({ checkPeriod: 1000 * 60 * 60 }),
+  }),
+);
+
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -37,6 +58,8 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Configure auth strategies and serialization
+  configureAuth();
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
@@ -64,7 +87,7 @@ app.use((req, res, next) => {
   server.listen({
     port,
     host: "0.0.0.0",
-    reusePort: true,
+    reusePort: false,
   }, () => {
     log(`serving on port ${port}`);
   });

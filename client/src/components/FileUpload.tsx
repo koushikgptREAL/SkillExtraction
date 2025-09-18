@@ -6,15 +6,31 @@ import { Progress } from "@/components/ui/progress";
 
 interface FileUploadProps {
   onFileUpload?: (file: File) => void;
+  onUploadResult?: (result: { textLength: number; skills: { name: string; category: string; confidence: number }[] }) => void;
   isProcessing?: boolean;
   isComplete?: boolean;
   onReset?: () => void;
 }
 
-export default function FileUpload({ onFileUpload, isProcessing = false, isComplete = false, onReset }: FileUploadProps) {
+export default function FileUpload({ onFileUpload, isProcessing = false, isComplete = false, onReset, onUploadResult }: FileUploadProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [progress, setProgress] = useState(0);
+
+  const uploadToServer = useCallback(async (file: File) => {
+    const form = new FormData();
+    form.append('file', file);
+    setProgress(10);
+    const res = await fetch('/api/upload', { method: 'POST', body: form, credentials: 'include' });
+    setProgress(70);
+    if (!res.ok) {
+      setProgress(0);
+      throw new Error(await res.text());
+    }
+    const json = await res.json();
+    setProgress(100);
+    onUploadResult?.(json);
+  }, [onUploadResult]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -37,20 +53,10 @@ export default function FileUpload({ onFileUpload, isProcessing = false, isCompl
       setUploadedFile(pdfFile);
       console.log('File uploaded:', pdfFile.name);
       onFileUpload?.(pdfFile);
-      
-      // Simulate upload progress
       setProgress(0);
-      const interval = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return prev + 10;
-        });
-      }, 100);
+      uploadToServer(pdfFile).catch(() => {});
     }
-  }, [onFileUpload]);
+  }, [onFileUpload, uploadToServer]);
 
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -58,20 +64,10 @@ export default function FileUpload({ onFileUpload, isProcessing = false, isCompl
       setUploadedFile(file);
       console.log('File selected:', file.name);
       onFileUpload?.(file);
-      
-      // Simulate upload progress
       setProgress(0);
-      const interval = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return prev + 10;
-        });
-      }, 100);
+      uploadToServer(file).catch(() => {});
     }
-  }, [onFileUpload]);
+  }, [onFileUpload, uploadToServer]);
 
   const handleReset = () => {
     setUploadedFile(null);

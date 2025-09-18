@@ -40,8 +40,21 @@ export async function setupVite(app: Express, server: Server) {
     appType: "custom",
   });
 
-  app.use(vite.middlewares);
+  // Apply Vite middleware with header check to prevent conflicts with Clerk
+  app.use((req, res, next) => {
+    // Skip Vite middleware for Clerk handshake requests
+    if (req.originalUrl.includes('__clerk_handshake') || res.headersSent) {
+      return next();
+    }
+    vite.middlewares(req, res, next);
+  });
+  
   app.use("*", async (req, res, next) => {
+    // Skip for Clerk handshake or if headers already sent
+    if (req.originalUrl.includes('__clerk_handshake') || res.headersSent) {
+      return next();
+    }
+    
     const url = req.originalUrl;
 
     try {

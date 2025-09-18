@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import AuthButton from "./AuthButton";
 import ThemeToggle from "./ThemeToggle";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
 
 interface LandingProps {
   onSignIn?: () => void;
@@ -73,25 +74,43 @@ export default function Landing({ onSignIn, user }: LandingProps) {
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
-              Professional Resume
-              <span className="block text-primary">Skill Analysis</span>
+              Placement Preparation
+              <span className="block text-primary">Assistant</span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Leverage enterprise-grade AI to extract, categorize, and optimize skills from your resume. 
-              Trusted by top companies and career professionals worldwide.
+              Leverage enterprise-grade AI to extract, categorize, and optimize skills from your resume
+              to build your career professionals worldwide.
             </p>
           </div>
           
           <div className="flex justify-center">
-            <Button 
-              size="lg" 
-              className="text-lg px-10 py-6 shadow-lg hover:shadow-xl transition-shadow"
-              onClick={onSignIn}
-              data-testid="button-get-started"
-            >
-              <Zap className="w-5 h-5 mr-2" />
-              Start Analysis
-            </Button>
+            {Boolean((import.meta.env as any).VITE_CLERK_PUBLISHABLE_KEY || (import.meta.env as any).NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) ? (
+              <SignedOut>
+                <SignInButton 
+                  mode="modal"
+                  forceRedirectUrl="http://localhost:5000/dashboard"
+                >
+                  <Button 
+                    size="lg" 
+                    className="text-lg px-10 py-6 shadow-lg hover:shadow-xl transition-shadow"
+                    data-testid="button-get-started"
+                  >
+                    <Zap className="w-5 h-5 mr-2" />
+                    Start Analysis
+                  </Button>
+                </SignInButton>
+              </SignedOut>
+            ) : (
+              <Button 
+                size="lg" 
+                className="text-lg px-10 py-6 shadow-lg hover:shadow-xl transition-shadow"
+                onClick={onSignIn}
+                data-testid="button-get-started"
+              >
+                <Zap className="w-5 h-5 mr-2" />
+                Start Analysis
+              </Button>
+            )}
           </div>
         </div>
       </section>

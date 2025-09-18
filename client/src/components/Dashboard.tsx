@@ -24,24 +24,21 @@ export default function Dashboard({ user, onSignOut }: DashboardProps) {
     setIsComplete(false);
     setExtractedSkills(null);
     
-    // Simulate processing
-    setTimeout(() => {
-      setIsProcessing(false);
-      setIsComplete(true);
-      // Mock extracted skills - in real app this would come from the backend
-      setExtractedSkills([
-        {
-          name: "Programming Languages",
-          icon: FileText,
-          color: "bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300",
-          skills: [
-            { name: "JavaScript", category: "Programming Languages", confidence: 95 },
-            { name: "Python", category: "Programming Languages", confidence: 88 },
-            { name: "TypeScript", category: "Programming Languages", confidence: 82 }
-          ]
-        }
-      ]);
-    }, 2000);
+    // Will complete when server responds via onUploadResult
+  };
+
+  const handleUploadResult = (result: { textLength: number; skills: { name: string; category: string; confidence: number }[] }) => {
+    setIsProcessing(false);
+    setIsComplete(true);
+    const mapped: SkillCategory[] = [
+      {
+        name: "Detected Skills",
+        icon: FileText,
+        color: "bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300",
+        skills: result.skills.map(s => ({ name: s.name, category: "Detected", confidence: s.confidence }))
+      }
+    ];
+    setExtractedSkills(mapped);
   };
 
   const handleReset = () => {
@@ -96,6 +93,7 @@ export default function Dashboard({ user, onSignOut }: DashboardProps) {
           <div className="flex justify-center">
             <FileUpload
               onFileUpload={handleFileUpload}
+              onUploadResult={handleUploadResult}
               isProcessing={isProcessing}
               isComplete={isComplete}
               onReset={handleReset}

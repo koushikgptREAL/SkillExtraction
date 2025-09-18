@@ -26,10 +26,10 @@ const defaultCategories: SkillCategory[] = [
     icon: Code,
     color: "bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300",
     skills: [
-      { name: "JavaScript", category: "Programming Languages", confidence: 95 },
-      { name: "Python", category: "Programming Languages", confidence: 88 },
-      { name: "TypeScript", category: "Programming Languages", confidence: 82 },
-      { name: "Java", category: "Programming Languages", confidence: 75 }
+      { name: "JavaScript", category: "Programming Languages", confidence: 100 },
+      { name: "Python", category: "Programming Languages", confidence: 100 },
+      { name: "TypeScript", category: "Programming Languages", confidence: 100 },
+      { name: "Java", category: "Programming Languages", confidence: 100 }
     ]
   },
   {
@@ -37,10 +37,10 @@ const defaultCategories: SkillCategory[] = [
     icon: Settings,
     color: "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-300",
     skills: [
-      { name: "React", category: "Frameworks & Libraries", confidence: 92 },
-      { name: "Node.js", category: "Frameworks & Libraries", confidence: 85 },
-      { name: "Express.js", category: "Frameworks & Libraries", confidence: 78 },
-      { name: "Django", category: "Frameworks & Libraries", confidence: 70 }
+      { name: "React", category: "Frameworks & Libraries", confidence: 100 },
+      { name: "Node.js", category: "Frameworks & Libraries", confidence: 100 },
+      { name: "Express.js", category: "Frameworks & Libraries", confidence: 100 },
+      { name: "Django", category: "Frameworks & Libraries", confidence: 100 }
     ]
   },
   {
@@ -48,9 +48,9 @@ const defaultCategories: SkillCategory[] = [
     icon: Database,
     color: "bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-300",
     skills: [
-      { name: "PostgreSQL", category: "Databases", confidence: 88 },
-      { name: "MongoDB", category: "Databases", confidence: 80 },
-      { name: "Redis", category: "Databases", confidence: 65 }
+      { name: "PostgreSQL", category: "Databases", confidence: 100 },
+      { name: "MongoDB", category: "Databases", confidence: 100 },
+      { name: "Redis", category: "Databases", confidence: 100 }
     ]
   },
   {
@@ -58,9 +58,9 @@ const defaultCategories: SkillCategory[] = [
     icon: Palette,
     color: "bg-pink-100 text-pink-700 dark:bg-pink-900/20 dark:text-pink-300",
     skills: [
-      { name: "Figma", category: "Design & UI", confidence: 90 },
-      { name: "Tailwind CSS", category: "Design & UI", confidence: 85 },
-      { name: "CSS", category: "Design & UI", confidence: 88 }
+      { name: "Figma", category: "Design & UI", confidence: 100 },
+      { name: "Tailwind CSS", category: "Design & UI", confidence: 100 },
+      { name: "CSS", category: "Design & UI", confidence: 100 }
     ]
   },
   {
@@ -68,9 +68,9 @@ const defaultCategories: SkillCategory[] = [
     icon: Users,
     color: "bg-orange-100 text-orange-700 dark:bg-orange-900/20 dark:text-orange-300",
     skills: [
-      { name: "Team Leadership", category: "Soft Skills", confidence: 92 },
-      { name: "Project Management", category: "Soft Skills", confidence: 88 },
-      { name: "Communication", category: "Soft Skills", confidence: 95 }
+      { name: "Team Leadership", category: "Soft Skills", confidence: 100 },
+      { name: "Project Management", category: "Soft Skills", confidence: 100 },
+      { name: "Communication", category: "Soft Skills", confidence: 100 }
     ]
   }
 ];
