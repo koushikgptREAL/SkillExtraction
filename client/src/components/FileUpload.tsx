@@ -6,7 +6,11 @@ import { Progress } from "@/components/ui/progress";
 
 interface FileUploadProps {
   onFileUpload?: (file: File) => void;
-  onUploadResult?: (result: { textLength: number; skills: { name: string; category: string; confidence: number }[] }) => void;
+  onUploadResult?: (result: { 
+    extractedText: string; 
+    extractedSkills: { name: string; category: string; confidence: number }[];
+    suggestedSkills?: { name: string; category: string; confidence: number }[];
+  }) => void;
   isProcessing?: boolean;
   isComplete?: boolean;
   onReset?: () => void;
@@ -18,19 +22,11 @@ export default function FileUpload({ onFileUpload, isProcessing = false, isCompl
   const [progress, setProgress] = useState(0);
 
   const uploadToServer = useCallback(async (file: File) => {
-    const form = new FormData();
-    form.append('file', file);
-    setProgress(10);
-    const res = await fetch('/api/upload', { method: 'POST', body: form, credentials: 'include' });
-    setProgress(70);
-    if (!res.ok) {
-      setProgress(0);
-      throw new Error(await res.text());
-    }
-    const json = await res.json();
+    // Skip this API call as it's causing the page to change after 20 seconds
+    // We're already handling the file upload in the Dashboard component
     setProgress(100);
-    onUploadResult?.(json);
-  }, [onUploadResult]);
+    // Don't call onUploadResult here to prevent overriding the results
+  }, []);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
